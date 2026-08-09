@@ -1,4 +1,3 @@
-```lua
 -- Random Speed Effect
 -- Nonsensical Video Generator Workshop Addon
 --
@@ -90,4 +89,3 @@ return {
 
     random_speed = chooseSpeed
 }
-```

@@ -1,4 +1,3 @@
-```lua
 --[[
     Get Down Dance Effect
     Nonsensical Video Generator v1.8.1.2
@@ -474,4 +473,3 @@ end
 ----------------------------------------------------------------
 
 return Effect
-```

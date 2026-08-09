@@ -1,4 +1,3 @@
-```lua
 --[[
     Sus Effect
     Nonsensical Video Generator Workshop Addon
@@ -706,4 +705,3 @@ function StopGeneration(
 
     return true
 end
-```

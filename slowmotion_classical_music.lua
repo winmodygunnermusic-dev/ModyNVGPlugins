@@ -1,4 +1,3 @@
-```lua
 --[[
     Slowmotion Classical Music Effect
     Nonsensical Video Generator v1.8.1.2
@@ -423,4 +422,3 @@ else
 end
 
 return Effect
-```

@@ -1,4 +1,3 @@
-```lua
 --[[
     Boom Effect
     Nonsensical Video Generator
@@ -315,4 +314,3 @@ function addon.Run(context)
 end
 
 return addon
-```

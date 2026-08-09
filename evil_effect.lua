@@ -1,4 +1,3 @@
-```lua
 -- Evil Effect
 -- Nonsensical Video Generator Workshop Effect
 -- File: evil_effect.lua
@@ -148,4 +147,3 @@ function StopGeneration(options, pluginSettings, functions)
     print("<[120,0,0]>Evil Effect: darkness has finished.")
     return true
 end
-```

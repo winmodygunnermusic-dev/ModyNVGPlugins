@@ -1,4 +1,3 @@
-```lua
 -- ArabFunny / Gen Alpha Library Effect
 -- Nonsensical Video Generator
 -- Generated custom Workshop effect
@@ -193,4 +192,3 @@ end
 
 
 return addon
-```

@@ -1,4 +1,3 @@
-```lua
 -- Random Sound Injection
 -- Nonsensical Video Generator Workshop Effect
 -- NVG v1.8.x
@@ -521,4 +520,3 @@ function StopGeneration(options, pluginSettings, functions)
 
     return true
 end
-```
