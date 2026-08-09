@@ -1,4 +1,3 @@
-```lua
 --[[
     Scratches and Freezes Effect
     Nonsensical Video Generator Workshop Addon
@@ -365,4 +364,3 @@ function StopGeneration(options, pluginSettings, functions)
 
     return true
 end
-```

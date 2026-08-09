@@ -1,4 +1,3 @@
-```lua
 -- Repeat Explosion Effect
 -- Nonsensical Video Generator
 -- Repeats short segments of the source video with an explosive,
@@ -182,4 +181,3 @@ function StopGeneration(options, pluginSettings, functions)
 
     return true
 end
-```

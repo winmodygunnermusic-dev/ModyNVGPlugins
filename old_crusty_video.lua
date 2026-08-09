@@ -1,4 +1,3 @@
-```lua
 --[[
     Old Crusty Video Effect
     Nonsensical Video Generator v1.8.1.2
@@ -307,4 +306,3 @@ function GetDescription()
         "flickering exposure, tracking damage, blur and " ..
         "unstable old-camera artifacts."
 end
-```

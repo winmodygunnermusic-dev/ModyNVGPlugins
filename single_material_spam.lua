@@ -1,4 +1,3 @@
-```lua
 -- Single Material Spam Effect
 -- Nonsensical Video Generator
 -- Suggested file:
@@ -186,4 +185,3 @@ end
 function StopGeneration(options, pluginSettings, functions)
     return true
 end
-```

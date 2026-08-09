@@ -1,4 +1,3 @@
-```lua
 --[[
     Supercut Effect
     Nonsensical Video Generator
@@ -447,4 +446,3 @@ end
 function StopGeneration(options, pluginSettings, functions)
     return true
 end
-```
