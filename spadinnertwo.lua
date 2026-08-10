@@ -1,4 +1,3 @@
-```lua
 -- SpaDinner Effect
 -- Nonsensical Video Generator v1.8.1.2
 -- Applies several SFX over time.
@@ -9,8 +8,8 @@
 
 local Effect = {}
 
-Effect.Name = "SpaDinner"
-Effect.Description = "Applies several SFX over time."
+Effect.Name = "SpaDinner SFX"
+Effect.Description = "Applies several SpaDinner SFX over time."
 Effect.Author = "Waltman13"
 Effect.Version = "1.0"
 
@@ -133,4 +132,3 @@ function Effect:Apply(context)
 end
 
 return Effect
-```

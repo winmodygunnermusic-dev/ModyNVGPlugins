@@ -1,4 +1,3 @@
-```lua
 --[[
     Crossover Mashes Effect
     Nonsensical Video Generator
@@ -508,4 +507,3 @@ function StopGeneration(
 
     return true
 end
-```

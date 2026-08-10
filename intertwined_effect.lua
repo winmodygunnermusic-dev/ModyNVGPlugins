@@ -1,4 +1,3 @@
-```lua
 --[[
     Intertwined Effect
     Nonsensical Video Generator
@@ -200,4 +199,3 @@ function StopGeneration(options, pluginSettings, functions)
 
     return true
 end
-```

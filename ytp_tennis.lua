@@ -1,4 +1,3 @@
-```lua
 --[[
     YTP Tennis
     Nonsensical Video Generator Workshop Effect
@@ -783,4 +782,3 @@ function StopGeneration(options, pluginSettings, functions)
 
     return true
 end
-```

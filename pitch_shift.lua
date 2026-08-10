@@ -1,4 +1,3 @@
-```lua
 -- Pitch Shift Effect
 -- Nonsensical Video Generator
 -- Changes the pitch of the video's audio without intentionally changing
@@ -115,4 +114,3 @@ end
 function StopGeneration(options, pluginSettings, functions)
     return true
 end
-```

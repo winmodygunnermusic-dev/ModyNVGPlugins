@@ -1,4 +1,3 @@
-```lua
 -- Speed Ramp Effect
 -- Nonsensical Video Generator v1.8.1.2
 -- Workshop addon
@@ -382,4 +381,3 @@ function StopGeneration(options, pluginSettings, functions)
     _G.speedRampState = nil
     return true
 end
-```

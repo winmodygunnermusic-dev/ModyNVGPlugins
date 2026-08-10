@@ -2,9 +2,18 @@
 -- Nonsensical Video Generator Workshop addon
 -- NVG v1.8.x
 
+local function numberSetting(settings, name, defaultValue)
+    local value = tonumber(settings[name])
+    if value == nil then
+        return defaultValue
+    end
+    return value
+end
+
 function Query()
     return {
         ["name"] = "Short Commercial Overlay",
+        ["description"] = "Randomly overlays a short commercial clip over the source video.",
 
         ["settings"] = {
             {
@@ -29,78 +38,47 @@ function Query()
     }
 end
 
-function Effect(job)
-    -- Random chance to activate the commercial overlay.
-    local chance = tonumber(job.settings["Chance"]) or 35
-
-    if math.random(1, 100) > chance then
-        return
+function StartGeneration(options, pluginSettings, functions)
+    if not functions.ffmpegInstalled() then
+        return false
     end
 
-    -- Pick a short commercial from the addon library.
-    local commercial = job.library["video"]["Commercials"]
-
-    if commercial == nil then
-        return
+    local chance = numberSetting(pluginSettings, "Chance", 35)
+    if functions.randomInt(1, 100) > chance then
+        functions.fileCopy(options.inputVideo, options.outputVideo)
+        return true
     end
 
-    -- Apply the selected commercial as a short overlay.
-    -- Keep the clip brief for a sudden YTP-style interruption.
-    local maxDuration =
-        tonumber(job.settings["Max Duration"]) or 4
+    local commercial = functions.getRandomLibraryFile("video", "Commercials")
+    if commercial == nil or commercial == "" then
+        functions.fileCopy(options.inputVideo, options.outputVideo)
+        return true
+    end
 
-    -- The exact render operation should use the video-effect
-    -- functions supplied by the NVG template for your installed version.
-    --
-    -- Recommended behavior:
-    -- 1. Select a random Commercials video.
-    -- 2. Limit it to Max Duration seconds.
-    -- 3. Scale it to the source video.
-    -- 4. Composite it over the current clip.
-    -- 5. Preserve the original audio unless the commercial
-    --    intentionally contains its own audio.
+    local maxDuration = math.max(0.1, numberSetting(pluginSettings, "Max Duration", 4))
+    local width = tonumber(options.width) or 1280
+    local height = tonumber(options.height) or 720
+
+    local filter =
+        "[1:v]trim=0:" .. tostring(maxDuration) ..
+        ",setpts=PTS-STARTPTS,scale=" .. tostring(width) .. ":" .. tostring(height) ..
+        ":force_original_aspect_ratio=increase,crop=" .. tostring(width) .. ":" .. tostring(height) ..
+        "[ad];[0:v][ad]overlay=0:0:enable='between(t,0," .. tostring(maxDuration) .. ")'[v]"
+
+    functions.runFFmpeg(
+        "-i \"" .. options.inputVideo .. "\" " ..
+        "-i \"" .. commercial .. "\" " ..
+        "-filter_complex \"" .. filter .. "\" " ..
+        "-map \"[v]\" -map 0:a? -c:v libx264 -preset veryfast -crf 18 " ..
+        "-c:a copy -shortest -y \"" .. options.outputVideo .. "\""
+    )
+
+    return true
 end
-```
 
-### Library structure
+function PostCommand(commandIndex, outputResult, errorResult, options, pluginSettings, functions)
+end
 
-Create the addon through **Addons → Workshop Effect Management**, then use the generated template rather than replacing the entire API structure manually. NVG's Workshop documentation specifically recommends creating an effect from its built-in template and editing the resulting Lua file.
-
-Use:
-
-```text
-NonsensicalVideoGenerator/
-└── plugins/
-    └── workshop/
-        └── short_commercial_overlay/
-            └── short_commercial_overlay.lua
-```
-
-And put your media in the addon's:
-
-```text
-Commercials/
-├── commercial_01.mp4
-├── commercial_02.mp4
-├── commercial_03.mp4
-├── commercial_04.mp4
-└── commercial_05.mp4
-```
-
-**Effect behavior:**
-
-```text
-Normal video
-     ↓
-35% activation chance
-     ↓
-Random Commercials clip
-     ↓
-0–4 second duration
-     ↓
-Full-frame / overlay
-     ↓
-Return to original video
-```
-
-For a more YTP-like result, use **0.5–3 second** commercials, occasional hard cuts, oversized logos, fake product ads, and abrupt transitions. NVG already treats overlays as a video-library category, and community effects can create their own video/audio libraries.
+function StopGeneration(options, pluginSettings, functions)
+    return true
+end

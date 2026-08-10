@@ -1,4 +1,3 @@
-```lua
 --[[
     Nonsensical Video Generator v1.8.1.2
     Workshop Addon: Random Cuts Effect
@@ -326,4 +325,3 @@ end
 ------------------------------------------------------------
 
 return RandomCuts
-```

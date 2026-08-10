@@ -1,4 +1,3 @@
-```lua
 --[[
     Nonsensical Video Generator
     Workshop Addon: Lagfun Effect
@@ -273,4 +272,3 @@ end
 ------------------------------------------------------------
 
 return addon
-```
