@@ -1,3 +1,35 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "The Boys Intro Meme Effect",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "pause_time",
+            ["value"] = 8.8,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- The Boys Intro Meme Effect
 -- Overlay 'The Boys' intro greenscreen video on a random video,
 -- pausing the base video at 8.8s for the remainder.

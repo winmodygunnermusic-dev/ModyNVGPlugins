@@ -1,3 +1,45 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Transition Overlay Effect 2 Addon",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 0.5,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "speed",
+            ["value"] = 1.0,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "size",
+            ["value"] = 0.2,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 math.randomseed(12345)
 
 function run(state)
@@ -5,9 +47,9 @@ function run(state)
   --   amount (default=0.5): transition blend amount
   --   speed (default=1.0): transition speed
   --   size (default=0.2): transition overlay size
-  local amount = state.params.amount or 0.5
-  local speed = state.params.speed or 1.0
-  local size = state.params.size or 0.2
+  local amount = getParam(state, "amount", 0.5)
+  local speed = getParam(state, "speed", 1.0)
+  local size = getParam(state, "size", 0.2)
 
   -- random seed for per-effect stability
   local seed = state.seed

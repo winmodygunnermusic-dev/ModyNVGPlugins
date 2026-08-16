@@ -1,9 +1,46 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Multi Pitch Stutter Loop Effect",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "speed",
+            ["value"] = 10.0,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "depth",
+            ["value"] = 2.0,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 function run(state)
   -- params: 
   --  .speed (float): stutter speed (default: 10.0)
   --  .depth (float): pitch shift amount (default: 2.0)
-  local speed = state.params.speed or 10.0
-  local depth = state.params.depth or 2.0
+  local speed = getParam(state, "speed", 10.0)
+  local depth = getParam(state, "depth", 2.0)
 
   -- stutter phase
   local phase = state.x * 0.01 + state.time * speed

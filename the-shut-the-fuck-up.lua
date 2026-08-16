@@ -1,10 +1,47 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "The Shut The Fuck Up",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 5,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "seed_offset",
+            ["value"] = 0,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 function run(state)
   -- params: 
   --   amount (default: 5) - speed multiplier
   --   seed_offset (default: 0) - random seed offset
 
-  local amount = state.params.amount or 5
-  local seed_offset = state.params.seed_offset or 0
+  local amount = getParam(state, "amount", 5)
+  local seed_offset = getParam(state, "seed_offset", 0)
 
   local r, g, b = state.r, state.g, state.b
   local frame = state.frame

@@ -1,3 +1,40 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Strobe Shake Effect Addon",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 0.5,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "speed",
+            ["value"] = 10,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- Strobe & Shake Effect Addon
 
 -- Tunable parameters
@@ -5,8 +42,8 @@
 -- speed: shake speed (default: 10)
 
 function run(state)
-  local amount = state.params.amount or 0.5
-  local speed = state.params.speed or 10
+  local amount = getParam(state, "amount", 0.5)
+  local speed = getParam(state, "speed", 10)
 
   -- strobe
   local strobe = math.sin(state.time * speed) > 0

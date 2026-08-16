@@ -1,3 +1,40 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Hateful Effect This Effect Takes",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "trim_height",
+            ["value"] = 10,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "iterations",
+            ["value"] = 5) - 1 do,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 math.randomseed(tick())
 
 -- Hateful Effect
@@ -26,7 +63,7 @@ function run(state)
     }
 
     -- Trim the material to be very short
-    local trimmedHeight = state.params.trim_height or 10
+    local trimmedHeight = getParam(state, "trim_height", 10)
     local yRatio = state.y / state.height
     if yRatio > trimmedHeight / state.height then
         return {skip=true}
@@ -35,7 +72,7 @@ function run(state)
     -- Select a random addon and apply it
     local addon = addons[math.random(1, #addons)]
     local r, g, b = addon(state.r, state.g, state.b)
-    for i = 1, (state.params.iterations or 5) - 1 do 
+    for i = 1, (getParam(state, "iterations", 5) - 1 do)
         r, g, b = addon(r, g, b)
     end
 

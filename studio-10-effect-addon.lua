@@ -1,3 +1,40 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Studio 10 Effect Addon",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 10,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "speed",
+            ["value"] = 1,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- Studio 10 Effect: Pixelate and displace pixels with a soft sine wave
 function run(state)
   local x, y = state.x, state.y
@@ -7,8 +44,8 @@ function run(state)
   -- Tunable parameters
   -- amount: pixelate size (default=10)
   -- speed: wave speed (default=1)
-  local amount = state.params.amount or 10
-  local speed = state.params.speed or 1
+  local amount = getParam(state, "amount", 10)
+  local speed = getParam(state, "speed", 1)
 
   -- Pixelate
   local pixelX = math.floor(x / amount) * amount
