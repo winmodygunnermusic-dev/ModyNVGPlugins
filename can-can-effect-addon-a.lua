@@ -1,3 +1,40 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Can Can Effect Addon A",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "speed",
+            ["value"] = 0.1,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "amount",
+            ["value"] = 10,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- Can Can Effect
 -- A psychedelic swirling effect with audio-reactive color changes
 
@@ -8,8 +45,8 @@ function run(state)
   -- Tunable parameters
   -- state.params.speed (default: 0.1) - Effect speed
   -- state.params.amount (default: 10) - Effect amount
-  local speed = state.params.speed or 0.1
-  local amount = state.params.amount or 10
+  local speed = getParam(state, "speed", 0.1)
+  local amount = getParam(state, "amount", 10)
 
   -- Calculate color based on audio spectrum and time
   local r, g, b = 128, 128, 128

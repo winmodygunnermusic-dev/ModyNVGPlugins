@@ -1,3 +1,40 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Windows Xp Remix Effect",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 0.5,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "speed",
+            ["value"] = 1.0,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- Windows XP Remix Effect
 -- A psychedelic blend of Windows XP's default wallpaper and a color gradient.
 
@@ -5,8 +42,8 @@ function run(state)
   -- Tunable parameters
   -- amount: 0.0 - 1.0, default 0.5 (blending amount)
   -- speed: 0.0 - 10.0, default 1.0 (gradient speed)
-  local amount = state.params.amount or 0.5
-  local speed = state.params.speed or 1.0
+  local amount = getParam(state, "amount", 0.5)
+  local speed = getParam(state, "speed", 1.0)
   
   -- Calculate gradient color based on pixel coordinates and time
   local gradientHue = (state.x + state.y + state.tick()) * speed

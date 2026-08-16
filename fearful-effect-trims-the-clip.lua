@@ -1,11 +1,53 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Fearful Effect Trims The Clip",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 0.5,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "offset_x",
+            ["value"] = 0,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "offset_y",
+            ["value"] = 0,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 function run(state)
   -- Configurable parameters
   -- amount: controls the intensity of the fear expression (default: 0.5)
   -- offset_x: horizontal offset of the fear expression (default: 0)
   -- offset_y: vertical offset of the fear expression (default: 0)
-  local amount = state.params.amount or 0.5
-  local offset_x = state.params.offset_x or 0
-  local offset_y = state.params.offset_y or 0
+  local amount = getParam(state, "amount", 0.5)
+  local offset_x = getParam(state, "offset_x", 0)
+  local offset_y = getParam(state, "offset_y", 0)
 
   -- Fear expression pixels (simple triangle for eyes and a curve for mouth)
   local eye_radius = 5

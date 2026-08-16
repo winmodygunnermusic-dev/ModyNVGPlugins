@@ -1,3 +1,35 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Slowmotion Piano Man Music Meme",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 2.0,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- Slowmotion Piano Man Music Meme Effect
 
 -- Define tunable parameters
@@ -6,7 +38,7 @@
 
 function run(state)
   -- Slow down the video
-  local slowdown_factor = state.params.amount or 2.0
+  local slowdown_factor = getParam(state, "amount", 2.0)
   local frame = math.floor(state.frame / slowdown_factor)
 
   -- Get the current pixel

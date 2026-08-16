@@ -1,3 +1,40 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Slowmotion Classical Music Meme Effect",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "speed",
+            ["value"] = 0.5,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "volume",
+            ["value"] = 1.0,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- Slowmotion Classical Music Meme Effect
 
 -- params: speed (default: 0.5), volume (default: 1.0)
@@ -5,7 +42,7 @@
 
 function run(state)
   -- Choose a random speed if not set
-  local speed = state.params.speed or 0.5
+  local speed = getParam(state, "speed", 0.5)
   if state.frame == 0 then
     state.seed = state.seed or math.random(9999)
   end
@@ -34,7 +71,7 @@ function run(state)
 
   -- Play classical music (implementation depends on NVG's audio handling)
   -- For demonstration purposes, assume classical music audio is handled elsewhere
-  -- local volume = state.params.volume or 1.0
+  -- local volume = getParam(state, "volume", 1.0)
   -- play_classical_music(volume)
 
   return {r = new_r, g = new_g, b = new_b}
