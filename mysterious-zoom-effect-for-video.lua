@@ -1,3 +1,40 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Mysterious Zoom Effect For Video",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 0.1,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "speed",
+            ["value"] = 1.0,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- Mysterious Zoom Effect
 -- A zooming effect that makes the video appear to zoom in and out.
 
@@ -6,8 +43,8 @@
 --   * speed: zoom speed (default: 1.0)
 
 function run(state)
-  local amount = state.params.amount or 0.1
-  local speed = state.params.speed or 1.0
+  local amount = getParam(state, "amount", 0.1)
+  local speed = getParam(state, "speed", 1.0)
 
   -- Calculate zoom factor
   local zoomFactor = 1 + math.sin(state.time * speed) * amount

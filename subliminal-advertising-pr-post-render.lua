@@ -1,3 +1,45 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Subliminal Advertising Pr Post Render",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 0.1,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "speed",
+            ["value"] = 10,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "message",
+            ["value"] = "Buy Now!",
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- Subliminal Advertising PR Post-Render Effect
 -- Exposes params:
 --   amount (default: 0.1) - intensity of the effect
@@ -5,9 +47,9 @@
 --   message (default: "Buy Now!") - message to display
 
 function run(state)
-  local amount = state.params.amount or 0.1
-  local speed = state.params.speed or 10
-  local message = state.params.message or "Buy Now!"
+  local amount = getParam(state, "amount", 0.1)
+  local speed = getParam(state, "speed", 10)
+  local message = getParam(state, "message", "Buy Now!")
 
   -- Create a font and render the message
   -- Note: NVG does not provide a built-in font system, 

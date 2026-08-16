@@ -1,3 +1,40 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Abrupt Framerate Chopping Scrambling Effect",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 5,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "speed",
+            ["value"] = 10,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 math.randomseed(12345)
 local frame_skip_seed = math.random(1000)
 local previous_frame = 0
@@ -6,8 +43,8 @@ function run(state)
   -- params: 
   --   amount (default=5): number of frames to randomly skip
   --   speed (default=10): speed of effect
-  local skip_amount = state.params.amount or 5
-  local speed = state.params.speed or 10
+  local skip_amount = getParam(state, "amount", 5)
+  local speed = getParam(state, "speed", 10)
 
   if state.seed ~= frame_skip_seed then
     math.randomseed(state.seed)

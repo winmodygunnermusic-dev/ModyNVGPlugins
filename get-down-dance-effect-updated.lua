@@ -1,3 +1,40 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Get Down Dance Effect Updated",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 10,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "speed",
+            ["value"] = 2,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- Get Down Dance Effect
 -- Inspired by 'Japanese Horse WTF!?!!?' video on YouTube
 
@@ -6,8 +43,8 @@
 -- speed: dance speed (default: 2)
 
 function run(state)
-  local amount = state.params.amount or 10
-  local speed = state.params.speed or 2
+  local amount = getParam(state, "amount", 10)
+  local speed = getParam(state, "speed", 2)
   local frame = state.frame
   local x, y = state.x, state.y
   local r, g, b = state.r, state.g, state.b

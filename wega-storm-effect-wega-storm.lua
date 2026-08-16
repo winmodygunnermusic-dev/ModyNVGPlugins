@@ -1,3 +1,40 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Wega Storm Effect Wega Storm",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 0.5,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "speed",
+            ["value"] = 100,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- Wega Storm Effect
 -- A chaotic storm of pixels
 
@@ -5,8 +42,8 @@ function run(state)
   -- Tunable parameters
   -- amount: storm intensity (default: 0.5)
   -- speed: storm speed (default: 100)
-  local amount = state.params.amount or 0.5
-  local speed = state.params.speed or 100
+  local amount = getParam(state, "amount", 0.5)
+  local speed = getParam(state, "speed", 100)
 
   -- Calculate storm offset
   local offset = math.sin(state.time * speed) * 10
