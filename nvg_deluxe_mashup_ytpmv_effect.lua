@@ -1,5 +1,5 @@
 -- NVG Deluxe Mashup / YTPMV Edit Effect
--- Nonsensical Video Generator v1.8.1.2 Workshop Effect
+-- Nonsensical Video Generator v1.8.1.3 Workshop Effect
 --
 -- Install this generated addon at:
 -- NonsensicalVideoGenerator\plugins\workshop\nvg_deluxe_mashup_ytpmv_effect.lua
@@ -90,6 +90,7 @@ function Query(localeName, localizationTokens)
             { ["name"] = "YTPMV Tempo", ["value"] = "1.25", ["type"] = "float", ["tooltip"] = "Speed-loop boost / YTPMV tempo multiplier." },
             { ["name"] = "Frame Reduction", ["value"] = "18", ["type"] = "number", ["tooltip"] = "Output FPS for choppy silly edits." },
             { ["name"] = "Overlay Count", ["value"] = "3", ["type"] = "number", ["tooltip"] = "Random image overlays/sources to layer." },
+            { ["name"] = "Caption Text", ["value"] = "NVG DELUXE YTPMV", ["type"] = "string", ["tooltip"] = "Flashing caption text drawn over the generated remix." },
             { ["name"] = "Use Screen Clip", ["value"] = "1", ["type"] = "bool", ["tooltip"] = "Blend in a random screen clip/source video." },
             { ["name"] = "Use SpaDinner Audio", ["value"] = "1", ["type"] = "bool", ["tooltip"] = "Mix SpaDinner-style hits and silly audio." },
             { ["name"] = "Use Sentence Mix", ["value"] = "1", ["type"] = "bool", ["tooltip"] = "Mix short sentence/audio chops as accents." },
@@ -100,7 +101,8 @@ function Query(localeName, localizationTokens)
             { ["name"] = "Deluxe Overlay Images", ["path"] = "deluxe_overlay_images", ["type"] = "image", ["tooltip"] = "PNG/JPG stickers, captions, source images and silly overlays." },
             { ["name"] = "Deluxe Screen Clips", ["path"] = "deluxe_screen_clips", ["type"] = "video", ["tooltip"] = "Source clips, screen captures and mashup video layers." },
             { ["name"] = "SpaDinner Audio", ["path"] = "spadinner_audio", ["type"] = "audio", ["tooltip"] = "SpaDinner SFX, bleeps, boings, screams and loud hits." },
-            { ["name"] = "Sentence Mix Audio", ["path"] = "sentence_mix_audio", ["type"] = "audio", ["tooltip"] = "Short words, phrases and chopped audio for sentence-mix accents." }
+            { ["name"] = "Sentence Mix Audio", ["path"] = "sentence_mix_audio", ["type"] = "audio", ["tooltip"] = "Short words, phrases and chopped audio for sentence-mix accents." },
+            { ["name"] = "YTPMV Audio Hits", ["path"] = "ytpmv_audio_hits", ["type"] = "audio", ["tooltip"] = "Shared YTPMV hits for deluxe musical accents." }
         }
     }
 end
@@ -124,6 +126,7 @@ function StartGeneration(options, pluginSettings, functions)
     local useSpaDinnerAudio = boolSetting(pluginSettings, "Use SpaDinner Audio", true)
     local useSentenceMix = boolSetting(pluginSettings, "Use Sentence Mix", true)
     local writeMetadata = boolSetting(pluginSettings, "Generate Vegas Metadata", true)
+    local captionText = pluginSettings["Caption Text"] or "NVG DELUXE YTPMV"
     local width = tonumber(options.width) or 1280
     local height = tonumber(options.height) or 720
 
@@ -232,7 +235,7 @@ function StartGeneration(options, pluginSettings, functions)
     end
 
     filters[#filters + 1] =
-        "[" .. currentVideo .. "]drawtext=text='NVG DELUXE YTPMV':" ..
+        "[" .. currentVideo .. "]drawtext=text='" .. captionText .. "':" ..
         "x=(w-text_w)/2:y=h*0.08:fontsize=" .. tostring(math.floor(height / 13)) ..
         ":fontcolor=cyan:borderw=5:bordercolor=black:" ..
         "enable='lt(mod(t,0.80),0.42)'[withtitle]"
