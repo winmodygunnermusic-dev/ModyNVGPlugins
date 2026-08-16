@@ -1,3 +1,40 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Face Replace Effect Addon",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 0.5,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "speed",
+            ["value"] = 1.0,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- Face-Replace Effect Addon
 -- Replaces a face with a playful, oscillating pattern.
 
@@ -5,8 +42,8 @@ function run(state)
   -- Tunable parameters
   -- amount: face detection sensitivity (default: 0.5)
   -- speed: oscillation speed (default: 1.0)
-  local amount = state.params.amount or 0.5
-  local speed = state.params.speed or 1.0
+  local amount = getParam(state, "amount", 0.5)
+  local speed = getParam(state, "speed", 1.0)
 
   -- Load face detection model (simplified for demonstration purposes)
   -- In a real implementation, use a library like OpenCV or a face detection API

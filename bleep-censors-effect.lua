@@ -1,3 +1,40 @@
+-- NVG workshop metadata and safe parameter helpers.
+
+local function getParam(state, name, defaultValue)
+    if state ~= nil and state.params ~= nil and state.params[name] ~= nil then
+        return state.params[name]
+    end
+
+    return defaultValue
+end
+
+function Query(localeName, localizationTokens)
+    return {
+        ["settings"] = {
+            {
+                ["name"] = "Display Name",
+                ["value"] = "Bleep Censors Effect",
+                ["type"] = "label"
+            },
+            {
+                ["name"] = "Description",
+                ["value"] = "YTP-style NVG pixel effect with safe default parameters.",
+                ["type"] = "label"
+            },
+        {
+            ["name"] = "amount",
+            ["value"] = 0.5,
+            ["type"] = "number"
+        },
+        {
+            ["name"] = "size",
+            ["value"] = 5,
+            ["type"] = "number"
+        },
+        }
+    }
+end
+
 -- Bleep Censors Effect
 -- --------------------
 
@@ -5,9 +42,9 @@
 function run(state)
   -- Tunable parameters
   -- amount: 0.0 (none) to 1.0 (all)
-  local amount = state.params.amount or 0.5
+  local amount = getParam(state, "amount", 0.5)
   -- size: box size (default 5)
-  local size = state.params.size or 5
+  local size = getParam(state, "size", 5)
 
   -- Determine if we should censor this pixel
   if math.random() < amount then
