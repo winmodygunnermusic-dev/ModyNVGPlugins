@@ -1,21 +1,22 @@
-math.randomseed(tick())
+-- Seed with os.time() at load time; tick() is only available during rendering.
+math.randomseed(os.time())
 
 -- Hateful Effect
 function run(state)
     -- List of addons to apply
     local addons = {
         function(r, g, b) return g, b, r end, -- Dankify: Simple RGB Shift
-        function(r, g, b) 
-            local gray = (r + g + b) / 3 
-            return r - gray, g - gray, b - gray 
+        function(r, g, b)
+            local gray = (r + g + b) / 3
+            return r - gray, g - gray, b - gray
         end, -- G-Major: Simple Chroma Key
-        function(r, g, b) 
-            local pixelateSize = 5 
+        function(r, g, b)
+            local pixelateSize = 5
             return math.floor(r / pixelateSize) * pixelateSize,
                    math.floor(g / pixelateSize) * pixelateSize,
-                   math.floor(b / pixelateSize) * pixelateSize 
+                   math.floor(b / pixelateSize) * pixelateSize
         end, -- Luig Group: Simple Pixelate
-        function(r, g, b) 
+        function(r, g, b)
             r = r + math.random(-20, 20)
             g = g + math.random(-20, 20)
             b = b + math.random(-20, 20)
@@ -26,7 +27,8 @@ function run(state)
     }
 
     -- Trim the material to be very short
-    local trimmedHeight = state.params.trim_height or 10
+    local params = state.params or {}
+    local trimmedHeight = params.trim_height or 10
     local yRatio = state.y / state.height
     if yRatio > trimmedHeight / state.height then
         return {skip=true}
@@ -35,7 +37,7 @@ function run(state)
     -- Select a random addon and apply it
     local addon = addons[math.random(1, #addons)]
     local r, g, b = addon(state.r, state.g, state.b)
-    for i = 1, (state.params.iterations or 5) - 1 do 
+    for i = 1, (params.iterations or 5) - 1 do
         r, g, b = addon(r, g, b)
     end
 
