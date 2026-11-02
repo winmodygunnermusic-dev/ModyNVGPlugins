@@ -210,10 +210,13 @@ function StartGeneration(options, pluginSettings, functions)
         "format=rgba,colorchannelmixer=aa=" .. alpha .. "[sticker];"
 
     if theme.tripleBurst then
+        -- Each overlay consumes its input pad, so split the prepared clip
+        -- before using it for the three separate bursts.
         filter = filter ..
-            "[base][sticker]overlay=x=(W-w)/2:y=(H-h)/2:enable='between(t,0,2)'[first];" ..
-            "[first][sticker]overlay=x=(W-w)/2:y=(H-h)/2:enable='between(t,4,6)'[second];" ..
-            "[second][sticker]overlay=x=(W-w)/2:y=(H-h)/2:enable='between(t,8,10)'[outv]"
+            "[sticker]split=3[sticker1][sticker2][sticker3];" ..
+            "[base][sticker1]overlay=x=(W-w)/2:y=(H-h)/2:enable='between(t,0,2)'[first];" ..
+            "[first][sticker2]overlay=x=(W-w)/2:y=(H-h)/2:enable='between(t,4,6)'[second];" ..
+            "[second][sticker3]overlay=x=(W-w)/2:y=(H-h)/2:enable='between(t,8,10)'[outv]"
     else
         filter = filter .. "[base][sticker]overlay=x=(W-w)/2:y=(H-h)/2:shortest=0:format=auto[outv]"
     end
